@@ -1,20 +1,30 @@
 # Verde Finanças Online
 
-Aplicativo de controle financeiro — preparação para GitHub + Vercel + Supabase.
+Aplicativo web de controle financeiro com interface 2.2, login por e-mail e senha e persistência no Supabase.
 
 ## Situação
-Este repositório é público. **Não coloque senhas, tokens, backups, lançamentos financeiros ou chaves secretas nele.**
+**Código enviado ao GitHub; não foi implantado na Vercel.** A sincronização ainda precisa de testes funcionais em dois dispositivos antes de uso real.
 
-A hospedagem na Vercel **ainda não foi publicada**. O aplicativo online ainda depende da integração do login e da sincronização.
+## Arquivos
+- `index.html`: interface financeira e tela de autenticação
+- `cloud.js`: sessão, leitura e gravação no Supabase, controle de versão para conflitos
+- `config.js`: URL e chave **pública** publishable do projeto
+- `supabase/schema.sql`: tabela financeira com Row Level Security
+- `vercel.json`: cabeçalhos de segurança
 
-## Preparação do Supabase
-1. Crie um projeto Supabase.
-2. Execute `supabase/schema.sql` no SQL Editor.
-3. Ative autenticação por e-mail.
-4. Configure no aplicativo apenas a URL e a chave **publishable/anon** do projeto. Nunca use a chave `service_role`.
-5. Antes de importar dados reais, teste login, isolamento entre usuários e sincronização.
+## Como testar após autorização de implantação
+1. Criar uma conta e confirmar o e-mail.
+2. Entrar e testar um lançamento de demonstração.
+3. Abrir a mesma conta em outro navegador e verificar atualização após voltar à aba.
+4. Importar um backup JSON antigo, conferir os saldos e exportar um novo backup.
+5. Verificar que uma segunda conta não consegue ler os dados da primeira.
+6. Testar edição simultânea; conflitos devem interromper a gravação e exigir backup.
 
-## Próximas etapas
-- Integrar o HTML do Verde Finanças 2.2 ao Supabase Auth e à tabela `finance_data`.
-- Testar backup, importação e conflitos entre dispositivos.
-- Preparar a implantação na Vercel e solicitar aprovação explícita antes de publicar.
+## Segurança
+- O repositório é público, mas **não** deve conter senhas, chaves secretas, tokens privados ou backups pessoais.
+- A chave `sb_publishable_` é pública e apropriada para uso no navegador.
+- Os dados financeiros são protegidos por RLS no banco.
+- A sincronização é por documento completo, não por transação; conflito entre dispositivos pode exigir intervenção.
+- Não usar para dados financeiros reais antes dos testes.
+
+**A implantação na Vercel exige aprovação explícita do proprietário.**
